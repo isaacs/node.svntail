@@ -1,0 +1,29 @@
+{
+	"name": "node-svn-tail",
+	"version": "0.0.1",
+  "author": {
+    "name": "xunuo",
+    "email": "i@xunuo.com",
+    "url": "http://www.xunuo.com"
+  },
+  "keywords": [
+    "missions",
+    "serial",
+    "paiallel"
+  ],
+  "description": "node svn server hook extend",
+  "homepage": "http://www.xunuo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xunuo/node-svn-tail.git"
+  },
+  "dependencies": {
+  	"node.extend": "1.x.x",
+  	"jschardet" : "1.x.x"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
