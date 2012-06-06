@@ -1,6 +1,6 @@
 {
-	"name": "node-svn-tail",
-	"version": "0.0.2",
+	"name": "node.svntail",
+	"version": "0.0.3",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -15,7 +15,7 @@
   "homepage": "http://www.xunuo.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xunuo/node-svn-tail.git"
+    "url": "https://github.com/xunuo/node.svntail.git"
   },
   "dependencies": {
   	"node.extend": "1.0.0",
