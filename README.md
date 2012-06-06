@@ -50,3 +50,6 @@ npm install
 	// 传入自定义配置 开始运行
 	preCommit.start(config);
 	
+
+
+ok!
