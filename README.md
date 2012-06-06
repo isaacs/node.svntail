@@ -5,3 +5,4 @@ node-svn-watcher
 
 
 new1
+new2
