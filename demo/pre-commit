@@ -214,7 +214,7 @@ var config = {
 };
 
 // 载入提交前检测模块
-var preCommit = require('./svn-pre-commit-validator/index.js');
+var preCommit = require('node.svntail/lib/hook-pre-commit.js');
 
 // 传入自定义配置 开始运行
 preCommit.start(config);
