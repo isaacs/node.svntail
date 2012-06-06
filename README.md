@@ -1,4 +1,5 @@
 node-svn-watcher
 ================
 
-基于nodejs的svn hook相关扩展
+基于NODEJS的SVN服务端钩子扩展
+
