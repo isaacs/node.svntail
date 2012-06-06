@@ -1,57 +1,52 @@
-= SVN TAIL =
-================
-åŸºäºNODEJSçš„SVNæœåŠ¡ç«¯é’©å­æ‰©å±•ã€‚
-
-
-å®‰è£…æ‰‹å†Œ
+°²×°ÊÖ²á
 ====================
 
-å®šä½hooksç›®å½•
+¶¨Î»hooksÄ¿Â¼
 --------------------
-ä¸€èˆ¬hooksç›®å½•ä½äºsvnåº“æ ¹ç›®å½•ä¸‹ï¼Œä¸€èˆ¬åŒçº§çš„ç›®å½•è¿˜æœ‰davã€dbã€locks
+Ò»°ãhooksÄ¿Â¼Î»ÓÚsvn¿â¸ùÄ¿Â¼ÏÂ£¬Ò»°ãÍ¬¼¶µÄÄ¿Â¼»¹ÓĞdav¡¢db¡¢locks
 
-å¯¼å‡º SVN Validator æ ¸å¿ƒ
+µ¼³ö SVN Validator ºËĞÄ
 --------------------
 npm install
 
 
-æ‰“å¼€pre-commité’©å­
+´ò¿ªpre-commit¹³×Ó
 --------------------
-	åœ¨hooksç›®å½•
+	ÔÚhooksÄ¿Â¼
 
 	#!/usr/bin/node
 
 	var config = {
 		/** 
-		 * ç‰ˆæœ¬åº“åœ°å€
+		 * °æ±¾¿âµØÖ·
 		 * @property config.repos {string}
 		 */
 		repos : process.argv[2],
 		/** 
-		 * å½“å‰æäº¤å”¯ä¸€æ ‡è¯†æˆ³ ä¸­é—´çŠ¶æ€ç‰ˆæœ¬å·
+		 * µ±Ç°Ìá½»Î¨Ò»±êÊ¶´Á ÖĞ¼ä×´Ì¬°æ±¾ºÅ
 		 * @property config.txn {string}
 		 */
 		txn : process.argv[3],
 		/** 
-		 * ä½œç”¨åŸŸ
+		 * ×÷ÓÃÓò
 		 * @property config.scope {array}
 		 */
 		scope : ["^intl-style/*","^dir-1/*"],
 		/** 
-		 * SVNæäº¤å†…å®¹ç¼“å­˜è·¯å¾„ æ£€æµ‹ä½œç”¨åŸŸ
+		 * SVNÌá½»ÄÚÈİ»º´æÂ·¾¶ ¼ì²â×÷ÓÃÓò
 		 * @property config.tempPath {string}
 		 */
 		tempPath : '/home/svn_proxy_base/hook/hooks/ali-f2e-lint-svn-temp/' + process.argv[3],
 		/**
-		 * svnlookå‘½ä»¤å…¨è·¯å¾„
+		 * svnlookÃüÁîÈ«Â·¾¶
 		 * @property config.cmdSvnlook {string}
 		 */
 		cmdSvnlook : '/usr/local/bin/svnlook'
 	};
 
-	// è½½å…¥æäº¤å‰æ£€æµ‹æ¨¡å—
+	// ÔØÈëÌá½»Ç°¼ì²âÄ£¿é
 	var preCommit = require('./ali-f2e-lint/run-svn-server/pre-commit.js');
 
-	// ä¼ å…¥è‡ªå®šä¹‰é…ç½® å¼€å§‹è¿è¡Œ
+	// ´«Èë×Ô¶¨ÒåÅäÖÃ ¿ªÊ¼ÔËĞĞ
 	preCommit.start(config);
 	

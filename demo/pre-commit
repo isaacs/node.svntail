@@ -99,7 +99,7 @@ var config = {
 	 * SVN提交内容缓存路径 检测作用域
 	 * @property config.tempPath {string}
 	 */
-	tempPath : __dirname + '/svn-pre-commit-validator-temp/' + process.argv[3],
+	tempPath : __dirname + '/temp-svntail-pre-commit/' + process.argv[3],
 	/**
 	 * svnlook命令全路径
 	 * @property config.cmdSvnlook {string}
