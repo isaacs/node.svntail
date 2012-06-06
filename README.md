@@ -1,4 +1,4 @@
-node-svn-watcher
+= SVN TAIL =
 ================
 基于NODEJS的SVN服务端钩子扩展。
 
