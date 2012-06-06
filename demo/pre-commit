@@ -1,0 +1,220 @@
+#!/usr/bin/node
+
+/**
+ * 配置集合
+*/
+
+// JSHint配置
+// 中文解释：http://www.zipeng.info/archives/jshint-intro.html
+// 另外一篇：http://ued.ctrip.com/blog/?p=2733
+var jsHintConfig1 = {
+    // Settings
+    "passfail"      : false,  // Stop on first error.
+    "maxerr"        : 10000,    // Maximum error before stopping.
+    // Predefined globals whom JSHint will ignore.
+    "browser"       : true,   // Standard browser globals e.g. `window`, `document`.
+    "node"          : false,
+    "rhino"         : false,
+    "couch"         : false,
+    "wsh"           : true,   // Windows Scripting Host.
+    "jquery"        : true,
+    "prototypejs"   : false,
+    "mootools"      : false,
+    "dojo"          : false,
+    "predef"        : [  // Custom globals.
+        //"exampleVar",
+        //"anotherCoolGlobal",
+        //"iLoveDouglas"
+    ],
+    // Development.
+    "debug"         : false,  // Allow debugger statements e.g. browser breakpoints.
+    "devel"         : false,   // Allow developments statements e.g. `console.log();`.
+    // ECMAScript 5.
+    "es5"           : false,   // Allow ECMAScript 5 syntax.
+    "strict"        : false,  // Require `use strict` pragma  in every file.
+    "globalstrict"  : false,  // Allow global "use strict" (also enables 'strict').
+    // The Good Parts.
+    "asi"           : false,  // Tolerate Automatic Semicolon Insertion (no semicolons). 
+    "laxbreak"      : true,   // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
+    "bitwise"       : false,   // Prohibit bitwise operators (&, |, ^, etc.).
+    "boss"          : true,  // Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
+    "curly"         : false,   // Require {} for every new block or scope.
+    "eqeqeq"        : false,   // Require triple equals i.e. `===`.
+    "eqnull"        : true,  // Tolerate use of `== null`.
+    "evil"          : true,  // Tolerate use of `eval`.
+    "expr"          : false,  // Tolerate `ExpressionStatement` as Programs.
+    "forin"         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
+    "immed"         : false,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
+    "latedef"       : false,   // Prohibit variable use before definition.
+    "loopfunc"      : true,   // Allow functions to be defined within loops.
+    "noarg"         : false,   // Prohibit use of `arguments.caller` and `arguments.callee`.
+    "regexp"        : false,   // Prohibit `.` and `[^...]` in regular expressions.
+    "regexdash"     : true,  // Tolerate unescaped last dash i.e. `[-...]`.
+    "scripturl"     : true,   // Tolerate script-targeted URLs.
+    "shadow"        : true,  // Allows re-define variables later in code e.g. `var x=1; x=2;`.
+    "supernew"      : true,  // Tolerate `new function () { ... };` and `new Object;`.
+    "undef"         : false,   // Require all non-global variables be declared before they are used.
+    // Personal styling preferences.
+    "newcap"        : false,   // Require capitalization of all constructor functions e.g. `new F()`.
+    "noempty"       : false,   // Prohibit use of empty blocks.
+    "nonew"         : false,   // Prohibit use of constructors for side-effects.
+    "nomen"         : false,   // Prohibit use of initial or trailing underbars in names.
+    "onevar"        : false,  // Allow only one `var` statement per function.
+    "plusplus"      : false,  // Prohibit use of `++` & `--`.
+    "sub"           : true,  // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
+    "trailing"      : false,   // Prohibit trailing whitespaces.
+    "white"         : false,   // Check against strict whitespace and indentation rules.
+    "indent"        : 4,       // Specify indentation spacing
+		// f2e cuestom
+		"smarttabs"		: true		// 允许 Mixed spaces and tabs.
+};
+
+var config = {
+	/**
+	 * 总控开关 (on/off)
+	 * @property config.switch {string}
+	 */
+	switch : "on",
+	/** 
+	 * 版本库地址
+	 * @property config.repos {string}
+	 */
+	repos : process.argv[2],
+	/** 
+	 * 当前提交唯一标识戳 中间状态版本号
+	 * @property config.txn {string}
+	 */
+	txn : process.argv[3],
+	/** 
+	 * 作用域
+	 * @property config.scope {array}
+	 */
+	scope : ['^intl-style/*'],
+	/** 
+	 * debug 模式 （额外信息输出）
+	 * @property config.debug {boolean}
+	 */
+	debug : false,
+	/** 
+	 * SVN提交内容缓存路径 检测作用域
+	 * @property config.tempPath {string}
+	 */
+	tempPath : __dirname + '/svn-pre-commit-validator-temp/' + process.argv[3],
+	/**
+	 * svnlook命令全路径
+	 * @property config.cmdSvnlook {string}
+	 */
+	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
+	/**
+	 * 强制提交注释标识
+	 * @property config.forceCommitLog {string}
+	 */
+	forceCommitLog : '--force-commit',
+	/**
+	 * 是否自动删除缓存文件
+	 * @property config.autoDelTemp {boolean}
+	 */
+	autoDelTemp : true,
+	/**
+	 * 各种检测模块配置  （和检测模块同名）
+	 * @property config.lintsConfig {object}
+	 */
+	validateConfigs : {
+		
+		// 提交路径检测规则
+		'mod-validator-path' : {
+			// 新增目录规则
+			'TheNewDirNameRules' : {
+				ruleName : 'The New Dir Name Validate Rules',
+				//warnning : '新增目录规则为 : 英文小写字母、数字、中划线连接(开头允许一个下划线)'
+				warnning : '(!) Found Some Dir(s) Name Errors, Rule: lowcase letters, number & line-through[or begining_underline].',
+				filter : {
+					itemType : 'dir',
+					commitType : ['A']
+				},
+				validateRule : '^_?[a-z0-9-]*/$'
+			},
+			// 新增文件规则
+			'TheNewFileNameRules' : {
+				ruleName : 'The New File Name Validate Rules',
+				//warnning : '新增文件规则为 : 英文小写字母、数字、中划线连接。'
+				warnning : '(!) Found Some File(s) Name Errors, Rule: lowcase letters, number & line-through.',
+				filter : {
+					itemType : 'file',
+					commitType : ['A']
+				},
+				validateRule : '^[a-z0-9-./]*$'
+			},
+			// JS目录文件规则
+			'JsDirRules' : {
+				ruleName : 'The Js Dir Validate Rules',
+				warnning : '(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*'],
+					// lib目录放行
+					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*']
+				},
+				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js).*$'
+			},
+			// CSS目录文件规则
+			'CssDirRules' : {
+				ruleName : 'The Css Dir Validate Rules',
+				warnning : '(!) New css file rule is : extname must be [css|md|css.seed|html].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/css/*','^intl-style/branches/.*?/deploy/htdocs/css/*']
+				},
+				validateRule : '^(.*?)\\.(?:css|md|css.seed|html).*$'
+			},
+			// 图片目录文件规则
+			'ImgDirRules' : {
+				ruleName : 'The Images Dir Validate Rules',
+				warnning : '(!) New image file rule is : extname must be [jpg|cur|gif|png|psd|md].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
+				},
+				validateRule : '^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'
+			}
+		},
+		// 编码检测规则
+		'mod-validator-charset' : {
+			// style utf-8 rule
+			'TheUTF8NoBOMRules' : {
+				ruleName : 'Files Charset Validate Rules',
+				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
+				filter : {
+					itemType : 'file'
+				},
+				validateRule : ['utf-8','ascii','null','windows-1252']
+			}
+		},
+		// JS语法检测
+		'mod-validator-jshint' : {
+			'TheJsHintRules' : {
+				ruleName : 'The Javascript Hint Rule',
+				warnning : '(!) JsHint Warnning(s).',
+				filter : {
+					itemType : 'file',
+					commitType : ['A','U','_U','UU','G'],
+					extName : [".js"],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*']
+				},
+				hintConfig : jsHintConfig1
+			}
+		}
+
+	}
+	// ↑ 各种检测模块配置
+	
+};
+
+// 载入提交前检测模块
+var preCommit = require('./svn-pre-commit-validator/index.js');
+
+// 传入自定义配置 开始运行
+preCommit.start(config);
