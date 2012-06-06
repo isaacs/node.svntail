@@ -18,8 +18,9 @@
     "url": "https://github.com/xunuo/node-svn-tail.git"
   },
   "dependencies": {
-  	"node.extend": "1.x.x",
-  	"jschardet" : "1.x.x"
+  	"node.extend": "1.0.0",
+  	"jschardet" : "1.0.2",
+  	"jshint" : "0.7.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
