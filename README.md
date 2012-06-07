@@ -11,9 +11,10 @@ nodejs 0.6.1x
 
 通过NPM安装node.svntail
 --------------------
-~~~
+~~~javascript
+// 在hooks目录下运行
 npm install node.svntail
-~~~
+~~~javascript
 
 修改pre-commit文件
 --------------------
