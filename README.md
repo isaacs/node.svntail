@@ -14,9 +14,10 @@ nodejs 0.6.1x
 ~~~javascript
 // 在hooks目录下运行
 npm install node.svntail
-~~~javascript
+~~~
 
-修改pre-commit文件
+
+修改pre-commit文件(以下是示例)
 --------------------
 ~~~javascript
 #!/usr/bin/node
@@ -188,4 +189,4 @@ var preCommit = require('node.svntail/lib/hook-pre-commit.js');
 
 // 传入自定义配置 开始运行
 preCommit.start(config);
-~~~javascript
+~~~
