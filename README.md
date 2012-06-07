@@ -28,6 +28,11 @@ npm install node.svntail
 
 修改pre-commit文件(以下是示例)
 --------------------
+
+
+注意！在一切开始前，首先要给pre-commit赋可执行权限。
+
+
 ~~~javascript
 #!/usr/bin/node
 
