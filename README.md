@@ -194,5 +194,6 @@ preCommit.start(config);
 运行服务端(默认端口为99)
 --------------------
 ~~~javascript
+// 开启前注意配置SVN钩子端的remoteConnect及remoteApiSettings配置
 node node.svntail/lib/server-reporter.js
 ~~~
