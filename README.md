@@ -1,13 +1,19 @@
 安装手册
 ====================
 
+依赖
+--------------------
+nodejs 0.6.1x
+
 定位hooks目录
 --------------------
 一般hooks目录位于svn库根目录下，一般同级的目录还有dav、db、locks
 
-NPM安装node.svntail
+通过NPM安装node.svntail
 --------------------
+~~~
 npm install node.svntail
+~~~
 
 修改pre-commit文件
 --------------------
