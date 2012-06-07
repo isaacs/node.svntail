@@ -190,3 +190,9 @@ var preCommit = require('node.svntail/lib/hook-pre-commit.js');
 // 传入自定义配置 开始运行
 preCommit.start(config);
 ~~~
+
+运行服务端(默认端口为99)
+--------------------
+~~~javascript
+node node.svntail/lib/server-reporter.js
+~~~
