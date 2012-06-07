@@ -10,42 +10,175 @@ NPM安装node.svntail
 npm install node.svntail
 
 
-打开pre-commit钩子
+修改pre-commit文件
 --------------------
-	在hooks目录
+~~~javascript
+#!/usr/bin/node
 
-	#!/usr/bin/node
+/**
+ * 配置集合
+*/
+var config = {
+	/**
+	 * 总控开关 (on/off)
+	 * @property config.switch {string}
+	 */
+	switch : "on",
+	/** 
+	 * 版本库地址
+	 * @property config.repos {string}
+	 */
+	repos : process.argv[2],
+	/** 
+	 * 当前提交唯一标识戳 中间状态版本号
+	 * @property config.txn {string}
+	 */
+	txn : process.argv[3],
+	/** 
+	 * 作用域
+	 * @property config.scope {array}
+	 */
+	scope : ['^intl-style/*'],
+	/** 
+	 * debug 模式 （额外信息输出）
+	 * @property config.debug {boolean}
+	 */
+	debug : false,
+	/** 
+	 * SVN提交内容缓存路径 检测作用域
+	 * @property config.tempPath {string}
+	 */
+	tempPath : __dirname + '/temp-svntail-pre-commit/' + process.argv[3],
+	/**
+	 * svnlook命令全路径
+	 * @property config.cmdSvnlook {string}
+	 */
+	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
+	/**
+	 * 是否需要传输数据到远程API
+	 * @property config.remoteConnect {boolean}
+	 */
+	remoteConnect : false,
+	/**
+	 * 远程API设置 ( 用于发送提交信息至此API )
+	 * @property config.remoteApiSettings {object}
+	 */
+	remoteApiSettings : {
+    host: 'reporter.aliui.com',
+    port: '99',
+    path: '/api.js',
+    method: 'POST'
+  },
+	/**
+	 * 强制提交注释标识
+	 * @property config.forceCommitLog {string}
+	 */
+	forceCommitLog : '--force-commit',
+	/**
+	 * 是否自动删除缓存文件
+	 * @property config.autoDelTemp {boolean}
+	 */
+	autoDelTemp : true,
+	/**
+	 * 各种检测模块配置  （和检测模块同名）
+	 * @property config.lintsConfig {object}
+	 */
+	validateConfigs : {
+		
+		// 提交路径检测规则
+		'mod-validator-path' : {
+			// 新增目录规则
+			'TheNewDirNameRules' : {
+				ruleName : 'The New Dir Name Validate Rules',
+				//warnning : '新增目录规则为 : 英文小写字母、数字、中划线连接(开头允许一个下划线)'
+				warnning : '(!) Found Some Dir(s) Name Errors, Rule: lowcase letters, number & line-through[or begining_underline].',
+				filter : {
+					itemType : 'dir',
+					commitType : ['A']
+				},
+				validateRule : '^_?[a-z0-9-]*/$'
+			},
+			// 新增文件规则
+			'TheNewFileNameRules' : {
+				ruleName : 'The New File Name Validate Rules',
+				//warnning : '新增文件规则为 : 英文小写字母、数字、中划线连接。'
+				warnning : '(!) Found Some File(s) Name Errors, Rule: lowcase letters, number & line-through.',
+				filter : {
+					itemType : 'file',
+					commitType : ['A']
+				},
+				validateRule : '^[a-z0-9-./]*$'
+			},
+			// JS目录文件规则
+			'JsDirRules' : {
+				ruleName : 'The Js Dir Validate Rules',
+				warnning : '(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*'],
+					// lib目录放行
+					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*']
+				},
+				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js).*$'
+			},
+			// CSS目录文件规则
+			'CssDirRules' : {
+				ruleName : 'The Css Dir Validate Rules',
+				warnning : '(!) New css file rule is : extname must be [css|md|css.seed|html].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/css/*','^intl-style/branches/.*?/deploy/htdocs/css/*']
+				},
+				validateRule : '^(.*?)\\.(?:css|md|css.seed|html).*$'
+			},
+			// 图片目录文件规则
+			'ImgDirRules' : {
+				ruleName : 'The Images Dir Validate Rules',
+				warnning : '(!) New image file rule is : extname must be [jpg|cur|gif|png|psd|md].',
+				filter : {
+					itemType : 'file',
+					commitType : ['A'],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
+				},
+				validateRule : '^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'
+			}
+		},
+		// 编码检测规则
+		'mod-validator-charset' : {
+			// style utf-8 rule
+			'TheUTF8NoBOMRules' : {
+				ruleName : 'Files Charset Validate Rules',
+				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
+				filter : {
+					itemType : 'file'
+				},
+				validateRule : ['utf-8','ascii','null','windows-1252']
+			}
+		},
+		// JS语法检测
+		'mod-validator-jshint' : {
+			'TheJsHintRules' : {
+				ruleName : 'The Javascript Hint Rule',
+				warnning : '(!) JsHint Warnning(s).',
+				filter : {
+					itemType : 'file',
+					commitType : ['A','U','_U','UU','G'],
+					extName : [".js"],
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*']
+				}
+			}
+		}
 
-	var config = {
-		/** 
-		 * 版本库地址
-		 * @property config.repos {string}
-		 */
-		repos : process.argv[2],
-		/** 
-		 * 当前提交唯一标识戳 中间状态版本号
-		 * @property config.txn {string}
-		 */
-		txn : process.argv[3],
-		/** 
-		 * 作用域
-		 * @property config.scope {array}
-		 */
-		scope : ["^intl-style/*","^dir-1/*"],
-		/** 
-		 * SVN提交内容缓存路径 检测作用域
-		 * @property config.tempPath {string}
-		 */
-		tempPath : '/home/svn_proxy_base/hook/hooks/ali-f2e-lint-svn-temp/' + process.argv[3],
-		/**
-		 * svnlook命令全路径
-		 * @property config.cmdSvnlook {string}
-		 */
-		cmdSvnlook : '/usr/local/bin/svnlook'
-	};
+	}
+	// ↑ 各种检测模块配置
+	
+};
 
-	// 载入提交前检测模块
-	var preCommit = require('./ali-f2e-lint/run-svn-server/pre-commit.js');
+// 载入提交前检测模块
+var preCommit = require('node.svntail/lib/hook-pre-commit.js');
 
-	// 传入自定义配置 开始运行
-	preCommit.start(config);
+// 传入自定义配置 开始运行
+preCommit.start(config);
+~~~javascript
