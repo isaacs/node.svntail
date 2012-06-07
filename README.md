@@ -5,9 +5,9 @@
 --------------------
 一般hooks目录位于svn库根目录下，一般同级的目录还有dav、db、locks
 
-导出 SVN Validator 核心
+NPM安装node.svntail
 --------------------
-npm install
+npm install node.svntail
 
 
 打开pre-commit钩子
