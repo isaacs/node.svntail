@@ -106,6 +106,21 @@ var config = {
 	 */
 	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
 	/**
+	 * 是否需要传输数据到远程API
+	 * @property config.remoteConnect {boolean}
+	 */
+	remoteConnect : false,
+	/**
+	 * 远程API设置 ( 用于发送提交信息至此API )
+	 * @property config.remoteApiSettings {object}
+	 */
+	remoteApiSettings : {
+    host: 'reporter.aliui.com',
+    port: '99',
+    path: '/api.js',
+    method: 'POST'
+  },
+	/**
 	 * 强制提交注释标识
 	 * @property config.forceCommitLog {string}
 	 */
