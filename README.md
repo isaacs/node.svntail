@@ -9,7 +9,6 @@ NPM安装node.svntail
 --------------------
 npm install node.svntail
 
-
 修改pre-commit文件
 --------------------
 ~~~javascript
@@ -51,6 +50,7 @@ var config = {
 	tempPath : __dirname + '/temp-svntail-pre-commit/' + process.argv[3],
 	/**
 	 * svnlook命令全路径
+	 * 通过whereis svnlook可获取，通常是 /usr/bin/svnlook 或 /usr/local/bin/svnlook
 	 * @property config.cmdSvnlook {string}
 	 */
 	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
