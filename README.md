@@ -7,9 +7,8 @@
 
 依赖
 --------------------
-nodejs 0.6.1x
-[NodeJS官方网站](http://nodejs.org/)
-[安装参考文章](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+nodejs 0.6.1x  
+[NodeJS官方网站](http://nodejs.org/) | [安装参考文章](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 定位hooks目录
 --------------------
