@@ -1,4 +1,4 @@
-截图
+演示截图
 ===================
 ![SVN尾巴](http://xunuo.com/node.svntail.snap1.png)
 
@@ -20,6 +20,8 @@ nodejs 0.6.1x
 // 在hooks目录下运行
 npm install node.svntail
 ~~~
+
+[NPM包详情](http://search.npmjs.org/#/node.svntail)
 
 
 修改pre-commit文件(以下是示例)
