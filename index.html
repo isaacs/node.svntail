@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>svntail by xunuo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>svntail</h1>
+        <p>基于nodejs的svn hook相关扩展(pre-commit/post-commit) 拥有检测文件内容及过滤功能</p>
+        <p class="view"><a href="https://github.com/xunuo/node.svntail">View the Project on GitHub <small>xunuo/node.svntail</small></a></p>
+        <ul>
+          <li><a href="https://github.com/xunuo/node.svntail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/xunuo/node.svntail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/xunuo/node.svntail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>演示截图</h1>
+
+<p><img src="http://xunuo.com/node.svntail.snap1.png" alt="SVN尾巴"></p>
+
+<hr><h1>安装手册</h1>
+
+<h2>依赖</h2>
+
+<p>nodejs 0.6.1x<br><a href="http://nodejs.org/">NodeJS官方网站</a> | <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager">安装参考文章</a></p>
+
+<h2>定位hooks目录</h2>
+
+<p>一般hooks目录位于svn库根目录下，一般同级的目录还有dav、db、locks</p>
+
+<h2>通过NPM安装node.svntail</h2>
+
+<div class="highlight">
+<pre><span class="c1">// 在hooks目录下运行</span>
+<span class="nx">npm</span> <span class="nx">install</span> <span class="nx">node</span><span class="p">.</span><span class="nx">svntail</span>
+</pre>
+</div>
+
+
+<p><a href="http://search.npmjs.org/#/node.svntail">NPM包详情</a></p>
+
+<h2>修改pre-commit文件(以下是示例)</h2>
+
+<p>注意！在一切开始前，首先要给pre-commit赋可执行权限。</p>
+
+<div class="highlight">
+<pre><span class="err">#</span><span class="o">!</span><span class="err">/usr/bin/node</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * 配置集合</span>
+<span class="cm">*/</span>
+<span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 总控开关 (on/off)</span>
+<span class="cm">     * @property config.switch {string}</span>
+<span class="cm">     */</span>
+    <span class="k">switch</span> <span class="o">:</span> <span class="s2">"on"</span><span class="p">,</span>
+    <span class="cm">/** </span>
+<span class="cm">     * 版本库地址</span>
+<span class="cm">     * @property config.repos {string}</span>
+<span class="cm">     */</span>
+    <span class="nx">repos</span> <span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="cm">/** </span>
+<span class="cm">     * 当前提交唯一标识戳 中间状态版本号</span>
+<span class="cm">     * @property config.txn {string}</span>
+<span class="cm">     */</span>
+    <span class="nx">txn</span> <span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+    <span class="cm">/** </span>
+<span class="cm">     * 作用域</span>
+<span class="cm">     * @property config.scope {array}</span>
+<span class="cm">     */</span>
+    <span class="nx">scope</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/*'</span><span class="p">],</span>
+    <span class="cm">/** </span>
+<span class="cm">     * debug 模式 （额外信息输出）</span>
+<span class="cm">     * @property config.debug {boolean}</span>
+<span class="cm">     */</span>
+    <span class="nx">debug</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="cm">/** </span>
+<span class="cm">     * SVN提交内容缓存路径 检测作用域</span>
+<span class="cm">     * @property config.tempPath {string}</span>
+<span class="cm">     */</span>
+    <span class="nx">tempPath</span> <span class="o">:</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/temp-svntail-pre-commit/'</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+    <span class="cm">/**</span>
+<span class="cm">     * svnlook命令全路径</span>
+<span class="cm">     * 通过whereis svnlook可获取，通常是 /usr/bin/svnlook 或 /usr/local/bin/svnlook</span>
+<span class="cm">     * @property config.cmdSvnlook {string}</span>
+<span class="cm">     */</span>
+    <span class="nx">cmdSvnlook</span> <span class="o">:</span> <span class="s1">'LANG=zh_CN.utf8 /usr/local/bin/svnlook'</span><span class="p">,</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 是否需要传输数据到远程API</span>
+<span class="cm">     * @property config.remoteConnect {boolean}</span>
+<span class="cm">     */</span>
+    <span class="nx">remoteConnect</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 远程API设置 ( 用于发送提交信息至此API )</span>
+<span class="cm">     * @property config.remoteApiSettings {object}</span>
+<span class="cm">     */</span>
+    <span class="nx">remoteApiSettings</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="nx">host</span><span class="o">:</span> <span class="s1">'reporter.aliui.com'</span><span class="p">,</span>
+    <span class="nx">port</span><span class="o">:</span> <span class="s1">'99'</span><span class="p">,</span>
+    <span class="nx">path</span><span class="o">:</span> <span class="s1">'/api.js'</span><span class="p">,</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">'POST'</span>
+  <span class="p">},</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 强制提交注释标识</span>
+<span class="cm">     * @property config.forceCommitLog {string}</span>
+<span class="cm">     */</span>
+    <span class="nx">forceCommitLog</span> <span class="o">:</span> <span class="s1">'--force-commit'</span><span class="p">,</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 是否自动删除缓存文件</span>
+<span class="cm">     * @property config.autoDelTemp {boolean}</span>
+<span class="cm">     */</span>
+    <span class="nx">autoDelTemp</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="cm">/**</span>
+<span class="cm">     * 各种检测模块配置  （和检测模块同名）</span>
+<span class="cm">     * @property config.lintsConfig {object}</span>
+<span class="cm">     */</span>
+    <span class="nx">validateConfigs</span> <span class="o">:</span> <span class="p">{</span>
+
+        <span class="c1">// 提交路径检测规则</span>
+        <span class="s1">'mod-validator-path'</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">// 新增目录规则</span>
+            <span class="s1">'TheNewDirNameRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The New Dir Name Validate Rules'</span><span class="p">,</span>
+                <span class="c1">//warnning : '新增目录规则为 : 英文小写字母、数字、中划线连接(开头允许一个下划线)'</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) Found Some Dir(s) Name Errors, Rule: lowcase letters, number &amp; line-through[or begining_underline].'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'dir'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="s1">'^_?[a-z0-9-]*/$'</span>
+            <span class="p">},</span>
+            <span class="c1">// 新增文件规则</span>
+            <span class="s1">'TheNewFileNameRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The New File Name Validate Rules'</span><span class="p">,</span>
+                <span class="c1">//warnning : '新增文件规则为 : 英文小写字母、数字、中划线连接。'</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) Found Some File(s) Name Errors, Rule: lowcase letters, number &amp; line-through.'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="s1">'^[a-z0-9-./]*$'</span>
+            <span class="p">},</span>
+            <span class="c1">// JS目录文件规则</span>
+            <span class="s1">'JsDirRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The Js Dir Validate Rules'</span><span class="p">,</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js].'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">],</span>
+                    <span class="nx">inRegx</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/trunk/deploy/htdocs/js/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/js/*'</span><span class="p">],</span>
+                    <span class="c1">// lib目录放行</span>
+                    <span class="nx">popRegx</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/trunk/deploy/htdocs/js/5v/lib/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="s1">'^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js).*$'</span>
+            <span class="p">},</span>
+            <span class="c1">// CSS目录文件规则</span>
+            <span class="s1">'CssDirRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The Css Dir Validate Rules'</span><span class="p">,</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) New css file rule is : extname must be [css|md|css.seed|html].'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">],</span>
+                    <span class="nx">inRegx</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/trunk/deploy/htdocs/css/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/css/*'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="s1">'^(.*?)\\.(?:css|md|css.seed|html).*$'</span>
+            <span class="p">},</span>
+            <span class="c1">// 图片目录文件规则</span>
+            <span class="s1">'ImgDirRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The Images Dir Validate Rules'</span><span class="p">,</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) New image file rule is : extname must be [jpg|cur|gif|png|psd|md].'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">],</span>
+                    <span class="nx">inRegx</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/trunk/deploy/htdocs/simg/*'</span><span class="p">,</span><span class="s1">'^intl-style/trunk/deploy/htdocs/wimg/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/simg/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/wimg/*'</span><span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="s1">'^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="c1">// 编码检测规则</span>
+        <span class="s1">'mod-validator-charset'</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="c1">// style utf-8 rule</span>
+            <span class="s1">'TheUTF8NoBOMRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'Files Charset Validate Rules'</span><span class="p">,</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span>
+                <span class="p">},</span>
+                <span class="nx">validateRule</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'utf-8'</span><span class="p">,</span><span class="s1">'ascii'</span><span class="p">,</span><span class="s1">'null'</span><span class="p">,</span><span class="s1">'windows-1252'</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="c1">// JS语法检测</span>
+        <span class="s1">'mod-validator-jshint'</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="s1">'TheJsHintRules'</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="nx">ruleName</span> <span class="o">:</span> <span class="s1">'The Javascript Hint Rule'</span><span class="p">,</span>
+                <span class="nx">warnning</span> <span class="o">:</span> <span class="s1">'(!) JsHint Warnning(s).'</span><span class="p">,</span>
+                <span class="nx">filter</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">itemType</span> <span class="o">:</span> <span class="s1">'file'</span><span class="p">,</span>
+                    <span class="nx">commitType</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span><span class="s1">'U'</span><span class="p">,</span><span class="s1">'_U'</span><span class="p">,</span><span class="s1">'UU'</span><span class="p">,</span><span class="s1">'G'</span><span class="p">],</span>
+                    <span class="nx">extName</span> <span class="o">:</span> <span class="p">[</span><span class="s2">".js"</span><span class="p">],</span>
+                    <span class="nx">inRegx</span> <span class="o">:</span> <span class="p">[</span><span class="s1">'^intl-style/trunk/deploy/htdocs/js/*'</span><span class="p">,</span><span class="s1">'^intl-style/branches/.*?/deploy/htdocs/js/*'</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+    <span class="c1">// ↑ 各种检测模块配置</span>
+
+<span class="p">};</span>
+
+<span class="c1">// 载入提交前检测模块</span>
+<span class="kd">var</span> <span class="nx">preCommit</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node.svntail/lib/hook-pre-commit.js'</span><span class="p">);</span>
+
+<span class="c1">// 传入自定义配置 开始运行</span>
+<span class="nx">preCommit</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h2>运行服务端(默认端口为99)</h2>
+
+<div class="highlight">
+<pre><span class="c1">// 开启前注意配置SVN钩子端的remoteConnect及remoteApiSettings配置</span>
+<span class="nx">node</span> <span class="nx">node</span><span class="p">.</span><span class="nx">svntail</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">server</span><span class="o">-</span><span class="nx">reporter</span><span class="p">.</span><span class="nx">js</span>
+</pre>
+</div>
+
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/xunuo">xunuo</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
