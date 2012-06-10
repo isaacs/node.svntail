@@ -6,6 +6,11 @@
     "email": "i@xunuo.com",
     "url": "http://www.xunuo.com"
   },
+  "contributors": [ 
+     { "name": "dnq", "email": "none@none" }, 
+     { "name": "zzy", "email": "none@none" },
+     { "name": "zxx", "email": "none@none" }
+   ],
   "keywords": [
     "missions",
     "serial",
@@ -18,14 +23,24 @@
     "url": "https://github.com/xunuo/node.svntail.git"
   },
   "dependencies": {
-  	"node.missions": "0.1.6",
-  	"node.extend": "1.0.0",
-  	"jschardet" : "1.0.2",
+  	"node.missions": ">= 0.1.6",
+  	"node.extend": ">= 1.0.0",
+  	"jschardet" : ">= 1.0.2",
   	"jshint" : "0.7.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
-  }
+  },
+	"scripts": {
+     "install": "run-at-install-start.js"
+     /*,
+     "uninstall": "uninstall.js",
+     "start": "node --debug server.js",
+     "build": "build.js",
+     "doc": "make-doc.js",
+     "test": "test.js"
+     */
+ }
 }
