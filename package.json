@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.1.9",
+	"version": "0.2.1",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -35,7 +35,7 @@
     "node": "*"
   },
   "bin":{
-  	"svntail": "./run-at-install.js"
+  	"svntail": "node ./run-at-install.js"
   },
 	"scripts": {
      "install": "node ./run-at-install.js"
