@@ -36,7 +36,7 @@
   },
   "bin":{
   	"svntail": "./run-at-install.js"
-  }
+  },
 	"scripts": {
      "install": "node ./run-at-install.js"
  }
