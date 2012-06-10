@@ -104,7 +104,7 @@ var config = {
 	 * svnlook命令全路径
 	 * @property config.cmdSvnlook {string}
 	 */
-	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
+	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/bin/svnlook',
 	/**
 	 * 是否需要传输数据到远程API
 	 * @property config.remoteConnect {boolean}
@@ -217,7 +217,7 @@ var config = {
 					itemType : 'file',
 					commitType : ['A','U','_U','UU','G'],
 					extName : [".js"],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*']
 				},
 				hintConfig : jsHintConfig1
 			}
