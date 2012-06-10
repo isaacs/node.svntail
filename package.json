@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.1.7",
+	"version": "0.1.9",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -10,11 +10,12 @@
      { "name": "dnq", "email": "none@none" }, 
      { "name": "zzy", "email": "none@none" },
      { "name": "zxx", "email": "none@none" }
-   ],
+  ],
   "keywords": [
-    "missions",
-    "serial",
-    "paiallel"
+    "svn",
+    "pre-commit",
+    "server hook",
+    "extend"
   ],
   "description": "node svn server hook extend",
   "homepage": "http://www.xunuo.com",
@@ -34,13 +35,6 @@
     "node": "*"
   },
 	"scripts": {
-     "install": "run-at-install-start.js"
-     /*,
-     "uninstall": "uninstall.js",
-     "start": "node --debug server.js",
-     "build": "build.js",
-     "doc": "make-doc.js",
-     "test": "test.js"
-     */
+     "install": "node ./run-at-install.js"
  }
 }
