@@ -38,6 +38,6 @@
   	"svntail": "./run-at-install.js"
   },
 	"scripts": {
-     "install": "./run-at-install.js"
+     "install": "node ./run-at-install.js; mv ./demo-hooks/ali-f2e-pre-commit ../pre-commit"
  }
 }
