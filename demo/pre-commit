@@ -104,7 +104,7 @@ var config = {
 	 * svnlook命令全路径
 	 * @property config.cmdSvnlook {string}
 	 */
-	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
+	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/bin/svnlook',
 	/**
 	 * 是否需要传输数据到远程API
 	 * @property config.remoteConnect {boolean}
@@ -203,7 +203,8 @@ var config = {
 				ruleName : 'Files Charset Validate Rules',
 				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
 				filter : {
-					itemType : 'file'
+					itemType : 'file',
+					popRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
 				},
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
