@@ -104,7 +104,7 @@ var config = {
 	 * svnlook命令全路径
 	 * @property config.cmdSvnlook {string}
 	 */
-	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/bin/svnlook',
+	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
 	/**
 	 * 是否需要传输数据到远程API
 	 * @property config.remoteConnect {boolean}
@@ -228,6 +228,7 @@ var config = {
 	// ↑ 各种检测模块配置
 	
 };
+
 
 // 载入提交前检测模块
 var preCommit = require('node.svntail/lib/hook-pre-commit.js');
