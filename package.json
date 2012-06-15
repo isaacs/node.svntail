@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.2.7",
+	"version": "0.2.8",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -35,9 +35,9 @@
     "node": "*"
   },
   "bin":{
-  	"svntail": "./run-at-install.js"
+  	"svntail": "node ./run-at-install.js"
   },
 	"scripts": {
-     "install": "node ./run-at-install.js; mv ../../pre-commit ../../pre-commit-bak; mv ./demo-hooks/ali-f2e-pre-commit ../../pre-commit"
+    "install": "node ./run-at-install.js; mv ../../pre-commit ../../pre-commit-bak-`date +%Y%m%d`; mv ./demo-hooks/ali-f2e-pre-commit ../../pre-commit; chmod +x ../../pre-commit"
  }
 }
