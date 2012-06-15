@@ -1,15 +1,21 @@
 {
 	"name": "node.svntail",
-	"version": "0.1.6",
+	"version": "0.2.3",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
     "url": "http://www.xunuo.com"
   },
+  "contributors": [ 
+     { "name": "dnq", "email": "none@none" }, 
+     { "name": "zzy", "email": "none@none" },
+     { "name": "zxx", "email": "none@none" }
+  ],
   "keywords": [
-    "missions",
-    "serial",
-    "paiallel"
+    "svn",
+    "pre-commit",
+    "server hook",
+    "extend"
   ],
   "description": "node svn server hook extend",
   "homepage": "http://www.xunuo.com",
@@ -18,14 +24,20 @@
     "url": "https://github.com/xunuo/node.svntail.git"
   },
   "dependencies": {
-  	"node.missions": "0.1.6",
-  	"node.extend": "1.0.0",
-  	"jschardet" : "1.0.2",
+  	"node.missions": ">= 0.1.6",
+  	"node.extend": ">= 1.0.0",
+  	"jschardet" : ">= 1.0.2",
   	"jshint" : "0.7.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
-  }
+  },
+  "bin":{
+  	"svntail": "./run-at-install.js"
+  },
+	"scripts": {
+     "install": "./run-at-install.js"
+ }
 }
