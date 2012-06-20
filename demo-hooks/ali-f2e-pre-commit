@@ -155,8 +155,19 @@ var config = {
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/mod/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/util/*']
 				}
 			}
+		},
+		// JS语法检测
+		'mod-validator-author' : {
+			'JSCoreRule' : {
+				ruleName : 'js core file commit limit',
+				warnning : '(!) you can not commit in this dir.',
+				filter : {
+					itemType : 'all',
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/*'],
+				},
+				master : ['nuo.xun','xiaoxing.zhangx']
+			}
 		}
-
 	}
 	// ↑ 各种检测模块配置
 	
