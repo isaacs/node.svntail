@@ -27,7 +27,7 @@
   	"node.missions": ">= 0.1.6",
   	"node.extend": ">= 1.0.0",
   	"jschardet" : ">= 1.0.2",
-  	"node.jshit" : ">= 0.0.1"
+  	"node.f2ehint" : ">= 0.0.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
