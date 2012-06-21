@@ -163,9 +163,9 @@ var config = {
 				warnning : '(!) You can not commit in this dir. The free authors are \n[ {{freeAuthors}} ]',
 				filter : {
 					itemType : 'all',
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/*','^intl-style/trunk/deploy/htdocs/js/5v/mod/common/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/ae/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/*','^intl-style/trunk/deploy/htdocs/js/5v/mod/common/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/ae/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/css/6v/seeds/*','^intl-style/branches/.*?/deploy/htdocs/css/6v/seeds/*']
 				},
-				freeAuthors : ['snow','xunuo']
+				freeAuthors : ['zhenyu.zhaozy','nanqiao.dengnq','xiaoxin.zhangxx','yanhua.guyh','zhao.wuz','xiaoyun.fuxy','peng.hep','jianqing.zengjq','been.zhangb','nuo.xun']
 			}
 		}
 	}
