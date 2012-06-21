@@ -191,6 +191,18 @@ var config = {
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*']
 				}
 			}
+		},
+		// Ã·Ωª’ﬂºÏ≤‚
+		'mod-validator-author' : {
+			'JSCommitLimitRule' : {
+				ruleName : 'The Javascript File Commit Limit',
+				warnning : '(!) You can not commit in this dir. The free authors are \n[ {{freeAuthors}} ]',
+				filter : {
+					itemType : 'all',
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/ae/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*']
+				},
+				freeAuthors : ['snow','xunuo']
+			}
 		}
 
 	}
