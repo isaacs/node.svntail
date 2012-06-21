@@ -152,7 +152,7 @@ var config = {
 					itemType : 'file',
 					commitType : ['A','U','_U','UU','G'],
 					extName : [".js"],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/mod/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/util/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/app/*','^intl-style/trunk/deploy/htdocs/js/5v/run/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/run/*','^intl-style/trunk/deploy/htdocs/js/5v/mod/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/*','^intl-style/trunk/deploy/htdocs/js/5v/util/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/util/*']
 				}
 			}
 		},
