@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.3.6",
+	"version": "0.3.7",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -35,6 +35,6 @@
     "node": "*"
   },
 	"scripts": {
-    "install": "node ./run-at-install.js; if [ -f '../../pre-commit' ];then cp ../../pre-commit ../../pre-commit-bak-`date +%Y%m%d%H%M%S`; fi"
+    "install": "node ./run-at-install.js; if [ -f '../../pre-commit' ];then \cp ../../pre-commit ../../pre-commit-bak-`date +%Y%m%d%H%M%S` -a; fi; \cp ./demo-hooks/ali-f2e-pre-commit ../../pre-commit -f; dos2unix ../../pre-commit;"
  }
 }
