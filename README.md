@@ -30,7 +30,7 @@ npm install node.svntail
 --------------------
 
 
-注意！在一切开始前，首先要给pre-commit赋可执行权限。
+注意！在一切开始前，首先要给pre-commit赋可执行权限，安装完成后建议运行 dos2unix pre-commit 转义其中的非ASCII字符.
 
 
 ~~~javascript

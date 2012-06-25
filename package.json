@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.3.4",
+	"version": "0.3.5",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -35,6 +35,6 @@
     "node": "*"
   },
 	"scripts": {
-    "install": "node ./run-at-install.js; cp ../../pre-commit ../../pre-commit-bak-`date +%Y%m%d%H%M%S`"
+    "install": "node ./run-at-install.js; if [ -f '../../pre-commit' ];then cp ../../pre-commit ../../pre-commit-bak-`date +%Y%m%d%H%M%S`; fi"
  }
 }

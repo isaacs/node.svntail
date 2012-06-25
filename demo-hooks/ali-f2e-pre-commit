@@ -1,6 +1,7 @@
 #!/usr/bin/node
 /**
  * 配置集合
+ * 安装完成后建议运行 dos2unix pre-commit 转义非法字符
 */
 
 var config = {
