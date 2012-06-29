@@ -1,6 +1,6 @@
 {
 	"name": "node.svntail",
-	"version": "0.3.7",
+	"version": "0.3.8",
   "author": {
     "name": "xunuo",
     "email": "i@xunuo.com",
@@ -23,6 +23,7 @@
     "type": "git",
     "url": "https://github.com/xunuo/node.svntail.git"
   },
+  "main" : "index.js",
   "dependencies": {
   	"node.missions": ">= 0.1.6",
   	"node.extend": ">= 1.0.0",

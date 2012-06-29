@@ -9,7 +9,7 @@ var config = {
 	 * 总控开关 (on/off)
 	 * @property config.switch {string}
 	 */
-	switch : "on",
+	"switch" : "on",
 	/** 
 	 * 版本库地址
 	 * @property config.repos {string}
