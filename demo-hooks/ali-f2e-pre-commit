@@ -80,7 +80,9 @@ var config = {
 				warnning : '(!) Found Some Dir(s) Name Errors, Rule: lowcase letters, number & line-through[or begining_underline].',
 				filter : {
 					itemType : 'dir',
-					commitType : ['A']
+					commitType : ['A'],
+					// 分支目录放行
+					popRegx : ['^intl-style/branches/.*?/$']
 				},
 				validateRule : '^_?[a-z0-9-]*/$'
 			},
@@ -104,7 +106,7 @@ var config = {
 					commitType : ['A'],
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*'],
 					// lib目录放行
-					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*']
+					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*','.*/demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js|conf).*$'
 			},
@@ -115,7 +117,8 @@ var config = {
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/css/*','^intl-style/branches/.*?/deploy/htdocs/css/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/css/*','^intl-style/branches/.*?/deploy/htdocs/css/*'],
+					popRegx : ['.*/demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:css|md|css.seed|html).*$'
 			},
@@ -126,7 +129,8 @@ var config = {
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*'],
+					popRegx : ['.*/demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'
 			}
@@ -139,7 +143,7 @@ var config = {
 				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
 				filter : {
 					itemType : 'file',
-					popRegx : ['^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
+					popRegx : ['.*/demo/.*$','^intl-style/trunk/deploy/htdocs/simg/*','^intl-style/trunk/deploy/htdocs/wimg/*','^intl-style/branches/.*?/deploy/htdocs/simg/*','^intl-style/branches/.*?/deploy/htdocs/wimg/*']
 				},
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
@@ -153,7 +157,8 @@ var config = {
 					itemType : 'file',
 					commitType : ['A','U','_U','UU','G'],
 					extName : [".js"],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*'],
+					popRegx : ['.*/demo/.*$']
 				}
 			}
 		},
