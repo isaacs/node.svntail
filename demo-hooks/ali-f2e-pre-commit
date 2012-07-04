@@ -82,7 +82,7 @@ var config = {
 					itemType : 'dir',
 					commitType : ['A'],
 					// 分支目录放行
-					popRegx : ['^intl-style/branches/[^/]*/$']
+					popRegx : ['^intl-style/branches/[^/]*/$','^intl-style/tags/[^/]*/$']
 				},
 				validateRule : '^_?[a-z0-9-]*/$'
 			},
