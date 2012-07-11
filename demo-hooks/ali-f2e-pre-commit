@@ -160,7 +160,8 @@ var config = {
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/.*','^intl-style/branches/.*?/deploy/htdocs/js/.*'],
 					popRegx : ['.*/_?demo/.*$']
 				}
-			}
+			},
+			skipSeed : true
 		},
 		// 提交者检测
 		'mod-validator-author' : {
