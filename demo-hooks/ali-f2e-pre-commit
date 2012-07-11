@@ -100,7 +100,7 @@ var config = {
 			// JS目录文件规则
 			'JsDirRules' : {
 				ruleName : 'The Js Dir Validate Rules',
-				warnning : '(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js|conf].',
+				warnning : '(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js|conf|bat].',
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
@@ -108,7 +108,7 @@ var config = {
 					// lib目录放行
 					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/.*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/.*','.*/_?demo/.*$']
 				},
-				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js|conf).*$'
+				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js|conf|bat).*$'
 			},
 			// CSS目录文件规则
 			'CssDirRules' : {
