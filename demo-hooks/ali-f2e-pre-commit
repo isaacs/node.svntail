@@ -155,7 +155,7 @@ var config = {
 				warnning : '(!) JsHint Warnning(s).',
 				filter : {
 					itemType : 'file',
-					commitType : ['A','U','_U','UU','G'],
+					commitType : ['A','U'],
 					extName : [".js"],
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/.*','^intl-style/branches/.*?/deploy/htdocs/js/.*'],
 					popRegx : ['.*/_?demo/.*$']
