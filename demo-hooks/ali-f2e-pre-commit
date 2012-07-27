@@ -170,7 +170,8 @@ var config = {
 				warnning : '(!) You can not commit in this dir. You must find \n[ {{freeAuthors}} ] \nreview this.',
 				filter : {
 					itemType : 'all',
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/.*','^intl-style/trunk/deploy/htdocs/js/5v/util/.*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/.*','^intl-style/trunk/deploy/htdocs/js/5v/mod/common/.*','^intl-style/trunk/deploy/htdocs/css/6v/seeds/.*']
+					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/.*','^intl-style/trunk/deploy/htdocs/js/5v/util/.*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/.*','^intl-style/trunk/deploy/htdocs/js/5v/mod/common/.*','^intl-style/trunk/deploy/htdocs/css/6v/seeds/.*'],
+					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/mod/common/_contribute/.*']
 				},
 				freeAuthors : ['zhenyu.zhaozy','nanqiao.dengnq','xiaoxin.zhangxx','yanhua.guyh','zhao.wuz','xiaoyun.fuxy','peng.hep','jianqing.zengjq','been.zhangb','nuo.xun']
 			}
