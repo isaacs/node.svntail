@@ -143,7 +143,7 @@ var config = {
 				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
 				filter : {
 					itemType : 'file',
-					extName : [".js",".css",".seed",".xml",".conf",".bat",".html",".htm"]
+					extName : [".js",".css",".seed",".xml",".conf",".bat",".html",".htm",".md"]
 				},
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
