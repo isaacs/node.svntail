@@ -143,7 +143,7 @@ var config = {
 				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
 				filter : {
 					itemType : 'file',
-					popRegx : ['.*/_?demo/.*$','^intl-style/trunk/deploy/htdocs/simg/.*','^intl-style/trunk/deploy/htdocs/wimg/.*','^intl-style/branches/.*?/deploy/htdocs/simg/.*','^intl-style/branches/.*?/deploy/htdocs/wimg/.*']
+					extName : [".js",".css",".seed",".xml",".conf",".bat",".html",".htm"]
 				},
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
