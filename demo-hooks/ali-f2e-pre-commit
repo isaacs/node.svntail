@@ -81,7 +81,9 @@ var config = {
 				filter : {
 					itemType : 'dir',
 					commitType : ['A'],
-					// 分支目录放行
+					// 仅检测分支内路径
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/.*'],
+					// 分支目录放行 因为aone系统要自动生成分支文件夹
 					popRegx : ['^intl-style/branches/[^/]*/$','^intl-style/tags/[^/]*/$']
 				},
 				validateRule : '^_?[a-z0-9-]*/$'
@@ -93,7 +95,9 @@ var config = {
 				warnning : '(!) Found Some File(s) Name Errors, Rule: lowcase letters, number & line-through.',
 				filter : {
 					itemType : 'file',
-					commitType : ['A']
+					commitType : ['A'],
+					// 仅检测分支内路径
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/.*']
 				},
 				validateRule : '^[a-z0-9-./]*$'
 			},
@@ -104,7 +108,7 @@ var config = {
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/.*','^intl-style/branches/.*?/deploy/htdocs/js/.*'],
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/.*'],
 					// lib目录放行
 					popRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/.*','.*/_?demo/.*$']
 				},
@@ -143,7 +147,9 @@ var config = {
 				warnning : '(!) File(s) with wrong charset. there must be : ASCII, UTF-8(without BOM).',
 				filter : {
 					itemType : 'file',
-					extName : [".js",".css",".seed",".xml",".conf",".bat",".html",".htm",".md"]
+					extName : [".js",".css",".seed",".xml",".conf",".bat",".html",".htm",".md"],
+					// 仅检测分支内路径
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/.*']
 				},
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
