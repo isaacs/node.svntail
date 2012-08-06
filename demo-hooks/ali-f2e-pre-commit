@@ -106,7 +106,7 @@ var config = {
 					commitType : ['A'],
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/.*','^intl-style/branches/.*?/deploy/htdocs/js/.*'],
 					// lib目录放行
-					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/.*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/.*','.*/_?demo/.*$']
+					popRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/.*','.*/_?demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js|conf|bat).*$'
 			},
@@ -117,7 +117,7 @@ var config = {
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/css/.*','^intl-style/branches/.*?/deploy/htdocs/css/.*'],
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/css/.*'],
 					popRegx : ['.*/_?demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:css|md|css.seed|html).*$'
@@ -129,7 +129,7 @@ var config = {
 				filter : {
 					itemType : 'file',
 					commitType : ['A'],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/simg/.*','^intl-style/trunk/deploy/htdocs/wimg/.*','^intl-style/branches/.*?/deploy/htdocs/simg/.*','^intl-style/branches/.*?/deploy/htdocs/wimg/.*'],
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/simg/.*','^intl-style/branches/.*?/deploy/htdocs/wimg/.*'],
 					popRegx : ['.*/_?demo/.*$']
 				},
 				validateRule : '^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'
@@ -157,7 +157,7 @@ var config = {
 					itemType : 'file',
 					commitType : ['A','U'],
 					extName : [".js"],
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/.*','^intl-style/branches/.*?/deploy/htdocs/js/.*'],
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/.*'],
 					popRegx : ['.*/_?demo/.*$']
 				},
 				skipSeed : true
@@ -170,8 +170,8 @@ var config = {
 				warnning : '(!) You can not commit in this dir. You must find \n[ {{freeAuthors}} ] \nreview this.',
 				filter : {
 					itemType : 'all',
-					inRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/app/.*','^intl-style/trunk/deploy/htdocs/js/5v/util/.*','^intl-style/trunk/deploy/htdocs/js/5v/lib/ae/.*','^intl-style/trunk/deploy/htdocs/js/5v/mod/common/.*','^intl-style/trunk/deploy/htdocs/css/6v/seeds/.*'],
-					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/mod/common/_contribute/.*']
+					inRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/5v/app/.*','^intl-style/branches/.*?/deploy/htdocs/js/5v/util/.*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/ae/.*','^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/.*','^intl-style/branches/.*?/deploy/htdocs/css/6v/seeds/.*'],
+					popRegx : ['^intl-style/branches/.*?/deploy/htdocs/js/5v/mod/common/_contribute/.*']
 				},
 				freeAuthors : ['zhenyu.zhaozy','nanqiao.dengnq','xiaoxin.zhangxx','yanhua.guyh','zhao.wuz','xiaoyun.fuxy','peng.hep','jianqing.zengjq','been.zhangb','nuo.xun']
 			}
