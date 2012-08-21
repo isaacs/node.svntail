@@ -1,88 +1,88 @@
-ÑİÊ¾½ØÍ¼
+æ¼”ç¤ºæˆªå›¾
 ===================
-![SVNÎ²°Í](http://xunuo.com/node.svntail.snap1.png)
+![SVNå°¾å·´](http://xunuo.com/node.svntail.snap1.png)
 
 ***************
 
-°²×°ÊÖ²á
+å®‰è£…æ‰‹å†Œ
 ====================
 
-ÒÀÀµ
+ä¾èµ–
 --------------------
 nodejs 0.6.1x  
-[NodeJS¹Ù·½ÍøÕ¾](http://nodejs.org/) | [°²×°²Î¿¼ÎÄÕÂ](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+[NodeJSå®˜æ–¹ç½‘ç«™](http://nodejs.org/) | [å®‰è£…å‚è€ƒæ–‡ç« ](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-¶¨Î»hooksÄ¿Â¼
+å®šä½hooksç›®å½•
 --------------------
-Ò»°ãhooksÄ¿Â¼Î»ÓÚsvn¿â¸ùÄ¿Â¼ÏÂ£¬Ò»°ãÍ¬¼¶µÄÄ¿Â¼»¹ÓĞdav¡¢db¡¢locks
+ä¸€èˆ¬hooksç›®å½•ä½äºsvnåº“æ ¹ç›®å½•ä¸‹ï¼Œä¸€èˆ¬åŒçº§çš„ç›®å½•è¿˜æœ‰davã€dbã€locks
 
-Í¨¹ıNPM°²×°node.svntail
+é€šè¿‡NPMå®‰è£…node.svntail
 --------------------
 ~~~javascript
-// ÔÚhooksÄ¿Â¼ÏÂÔËĞĞ
+// åœ¨hooksç›®å½•ä¸‹è¿è¡Œ
 npm install node.svntail
 ~~~
 
-[NPM°üÏêÇé](http://search.npmjs.org/#/node.svntail)
+[NPMåŒ…è¯¦æƒ…](http://search.npmjs.org/#/node.svntail)
 
 
-ĞŞ¸Äpre-commitÎÄ¼ş(ÒÔÏÂÊÇÊ¾Àı)
+ä¿®æ”¹pre-commitæ–‡ä»¶(ä»¥ä¸‹æ˜¯ç¤ºä¾‹)
 --------------------
 
 
-×¢Òâ£¡ÔÚÒ»ÇĞ¿ªÊ¼Ç°£¬Ê×ÏÈÒª¸øpre-commit¸³¿ÉÖ´ĞĞÈ¨ÏŞ£¬°²×°Íê³Éºó½¨ÒéÔËĞĞ dos2unix pre-commit ×ªÒåÆäÖĞµÄ·ÇASCII×Ö·û.
+æ³¨æ„ï¼åœ¨ä¸€åˆ‡å¼€å§‹å‰ï¼Œé¦–å…ˆè¦ç»™pre-commitèµ‹å¯æ‰§è¡Œæƒé™ï¼Œå®‰è£…å®Œæˆåå»ºè®®è¿è¡Œ dos2unix pre-commit è½¬ä¹‰å…¶ä¸­çš„éASCIIå­—ç¬¦.
 
 
 ~~~javascript
 #!/usr/bin/node
 
 /**
- * ÅäÖÃ¼¯ºÏ
+ * é…ç½®é›†åˆ
 */
 var config = {
 	/**
-	 * ×Ü¿Ø¿ª¹Ø (on/off)
+	 * æ€»æ§å¼€å…³ (on/off)
 	 * @property config.switch {string}
 	 */
 	switch : "on",
 	/** 
-	 * °æ±¾¿âµØÖ·
+	 * ç‰ˆæœ¬åº“åœ°å€
 	 * @property config.repos {string}
 	 */
 	repos : process.argv[2],
 	/** 
-	 * µ±Ç°Ìá½»Î¨Ò»±êÊ¶´Á ÖĞ¼ä×´Ì¬°æ±¾ºÅ
+	 * å½“å‰æäº¤å”¯ä¸€æ ‡è¯†æˆ³ ä¸­é—´çŠ¶æ€ç‰ˆæœ¬å·
 	 * @property config.txn {string}
 	 */
 	txn : process.argv[3],
 	/** 
-	 * ×÷ÓÃÓò
+	 * ä½œç”¨åŸŸ
 	 * @property config.scope {array}
 	 */
 	scope : ['^intl-style/*'],
 	/** 
-	 * debug Ä£Ê½ £¨¶îÍâĞÅÏ¢Êä³ö£©
+	 * debug æ¨¡å¼ ï¼ˆé¢å¤–ä¿¡æ¯è¾“å‡ºï¼‰
 	 * @property config.debug {boolean}
 	 */
 	debug : false,
 	/** 
-	 * SVNÌá½»ÄÚÈİ»º´æÂ·¾¶ ¼ì²â×÷ÓÃÓò
+	 * SVNæäº¤å†…å®¹ç¼“å­˜è·¯å¾„ æ£€æµ‹ä½œç”¨åŸŸ
 	 * @property config.tempPath {string}
 	 */
 	tempPath : __dirname + '/temp-svntail-pre-commit/' + process.argv[3],
 	/**
-	 * svnlookÃüÁîÈ«Â·¾¶
-	 * Í¨¹ıwhereis svnlook¿É»ñÈ¡£¬Í¨³£ÊÇ /usr/bin/svnlook »ò /usr/local/bin/svnlook
+	 * svnlookå‘½ä»¤å…¨è·¯å¾„
+	 * é€šè¿‡whereis svnlookå¯è·å–ï¼Œé€šå¸¸æ˜¯ /usr/bin/svnlook æˆ– /usr/local/bin/svnlook
 	 * @property config.cmdSvnlook {string}
 	 */
 	cmdSvnlook : 'LANG=zh_CN.utf8 /usr/local/bin/svnlook',
 	/**
-	 * ÊÇ·ñĞèÒª´«ÊäÊı¾İµ½Ô¶³ÌAPI
+	 * æ˜¯å¦éœ€è¦ä¼ è¾“æ•°æ®åˆ°è¿œç¨‹API
 	 * @property config.remoteConnect {boolean}
 	 */
 	remoteConnect : false,
 	/**
-	 * Ô¶³ÌAPIÉèÖÃ ( ÓÃÓÚ·¢ËÍÌá½»ĞÅÏ¢ÖÁ´ËAPI )
+	 * è¿œç¨‹APIè®¾ç½® ( ç”¨äºå‘é€æäº¤ä¿¡æ¯è‡³æ­¤API )
 	 * @property config.remoteApiSettings {object}
 	 */
 	remoteApiSettings : {
@@ -92,27 +92,27 @@ var config = {
     method: 'POST'
   },
 	/**
-	 * Ç¿ÖÆÌá½»×¢ÊÍ±êÊ¶
+	 * å¼ºåˆ¶æäº¤æ³¨é‡Šæ ‡è¯†
 	 * @property config.forceCommitLog {string}
 	 */
 	forceCommitLog : '--force-commit',
 	/**
-	 * ÊÇ·ñ×Ô¶¯É¾³ı»º´æÎÄ¼ş
+	 * æ˜¯å¦è‡ªåŠ¨åˆ é™¤ç¼“å­˜æ–‡ä»¶
 	 * @property config.autoDelTemp {boolean}
 	 */
 	autoDelTemp : true,
 	/**
-	 * ¸÷ÖÖ¼ì²âÄ£¿éÅäÖÃ  £¨ºÍ¼ì²âÄ£¿éÍ¬Ãû£©
+	 * å„ç§æ£€æµ‹æ¨¡å—é…ç½®  ï¼ˆå’Œæ£€æµ‹æ¨¡å—åŒåï¼‰
 	 * @property config.lintsConfig {object}
 	 */
 	validateConfigs : {
 		
-		// Ìá½»Â·¾¶¼ì²â¹æÔò
+		// æäº¤è·¯å¾„æ£€æµ‹è§„åˆ™
 		'mod-validator-path' : {
-			// ĞÂÔöÄ¿Â¼¹æÔò
+			// æ–°å¢ç›®å½•è§„åˆ™
 			'TheNewDirNameRules' : {
 				ruleName : 'The New Dir Name Validate Rules',
-				//warnning : 'ĞÂÔöÄ¿Â¼¹æÔòÎª : Ó¢ÎÄĞ¡Ğ´×ÖÄ¸¡¢Êı×Ö¡¢ÖĞ»®ÏßÁ¬½Ó(¿ªÍ·ÔÊĞíÒ»¸öÏÂ»®Ïß)'
+				//warnning : 'æ–°å¢ç›®å½•è§„åˆ™ä¸º : è‹±æ–‡å°å†™å­—æ¯ã€æ•°å­—ã€ä¸­åˆ’çº¿è¿æ¥(å¼€å¤´å…è®¸ä¸€ä¸ªä¸‹åˆ’çº¿)'
 				warnning : '(!) Found Some Dir(s) Name Errors, Rule: lowcase letters, number & line-through[or begining_underline].',
 				filter : {
 					itemType : 'dir',
@@ -120,10 +120,10 @@ var config = {
 				},
 				validateRule : '^_?[a-z0-9-]*/$'
 			},
-			// ĞÂÔöÎÄ¼ş¹æÔò
+			// æ–°å¢æ–‡ä»¶è§„åˆ™
 			'TheNewFileNameRules' : {
 				ruleName : 'The New File Name Validate Rules',
-				//warnning : 'ĞÂÔöÎÄ¼ş¹æÔòÎª : Ó¢ÎÄĞ¡Ğ´×ÖÄ¸¡¢Êı×Ö¡¢ÖĞ»®ÏßÁ¬½Ó¡£'
+				//warnning : 'æ–°å¢æ–‡ä»¶è§„åˆ™ä¸º : è‹±æ–‡å°å†™å­—æ¯ã€æ•°å­—ã€ä¸­åˆ’çº¿è¿æ¥ã€‚'
 				warnning : '(!) Found Some File(s) Name Errors, Rule: lowcase letters, number & line-through.',
 				filter : {
 					itemType : 'file',
@@ -131,7 +131,7 @@ var config = {
 				},
 				validateRule : '^[a-z0-9-./]*$'
 			},
-			// JSÄ¿Â¼ÎÄ¼ş¹æÔò
+			// JSç›®å½•æ–‡ä»¶è§„åˆ™
 			'JsDirRules' : {
 				ruleName : 'The Js Dir Validate Rules',
 				warnning : '(!) New js file rule is : extname must be [js|md|js.seed|xml|html|spec.js].',
@@ -139,12 +139,12 @@ var config = {
 					itemType : 'file',
 					commitType : ['A'],
 					inRegx : ['^intl-style/trunk/deploy/htdocs/js/*','^intl-style/branches/.*?/deploy/htdocs/js/*'],
-					// libÄ¿Â¼·ÅĞĞ
+					// libç›®å½•æ”¾è¡Œ
 					popRegx : ['^intl-style/trunk/deploy/htdocs/js/5v/lib/*','^intl-style/branches/.*?/deploy/htdocs/js/5v/lib/*']
 				},
 				validateRule : '^(.*?)\\.(?:js|md|js.seed|xml|html|spec.js).*$'
 			},
-			// CSSÄ¿Â¼ÎÄ¼ş¹æÔò
+			// CSSç›®å½•æ–‡ä»¶è§„åˆ™
 			'CssDirRules' : {
 				ruleName : 'The Css Dir Validate Rules',
 				warnning : '(!) New css file rule is : extname must be [css|md|css.seed|html].',
@@ -155,7 +155,7 @@ var config = {
 				},
 				validateRule : '^(.*?)\\.(?:css|md|css.seed|html).*$'
 			},
-			// Í¼Æ¬Ä¿Â¼ÎÄ¼ş¹æÔò
+			// å›¾ç‰‡ç›®å½•æ–‡ä»¶è§„åˆ™
 			'ImgDirRules' : {
 				ruleName : 'The Images Dir Validate Rules',
 				warnning : '(!) New image file rule is : extname must be [jpg|cur|gif|png|psd|md].',
@@ -167,7 +167,7 @@ var config = {
 				validateRule : '^(.*?)\\.(?:jpg|cur|gif|png|psd|md).*$'
 			}
 		},
-		// ±àÂë¼ì²â¹æÔò
+		// ç¼–ç æ£€æµ‹è§„åˆ™
 		'mod-validator-charset' : {
 			// style utf-8 rule
 			'TheUTF8NoBOMRules' : {
@@ -179,7 +179,7 @@ var config = {
 				validateRule : ['utf-8','ascii','null','windows-1252']
 			}
 		},
-		// JSÓï·¨¼ì²â
+		// JSè¯­æ³•æ£€æµ‹
 		'mod-validator-jshint' : {
 			'TheJsHintRules' : {
 				ruleName : 'The Javascript Hint Rule',
@@ -192,7 +192,7 @@ var config = {
 				}
 			}
 		},
-		// Ìá½»Õß¼ì²â
+		// æäº¤è€…æ£€æµ‹
 		'mod-validator-author' : {
 			'JSCommitLimitRule' : {
 				ruleName : 'The Javascript File Commit Limit',
@@ -206,20 +206,20 @@ var config = {
 		}
 
 	}
-	// ¡ü ¸÷ÖÖ¼ì²âÄ£¿éÅäÖÃ
+	// â†‘ å„ç§æ£€æµ‹æ¨¡å—é…ç½®
 	
 };
 
-// ÔØÈëÌá½»Ç°¼ì²âÄ£¿é
+// è½½å…¥æäº¤å‰æ£€æµ‹æ¨¡å—
 var preCommit = require('node.svntail/lib/hook-pre-commit.js');
 
-// ´«Èë×Ô¶¨ÒåÅäÖÃ ¿ªÊ¼ÔËĞĞ
+// ä¼ å…¥è‡ªå®šä¹‰é…ç½® å¼€å§‹è¿è¡Œ
 preCommit.start(config);
 ~~~
 
-ÔËĞĞ·şÎñ¶Ë(Ä¬ÈÏ¶Ë¿ÚÎª99)
+è¿è¡ŒæœåŠ¡ç«¯(é»˜è®¤ç«¯å£ä¸º99)
 --------------------
 ~~~javascript
-// ¿ªÆôÇ°×¢ÒâÅäÖÃSVN¹³×Ó¶ËµÄremoteConnect¼°remoteApiSettingsÅäÖÃ
+// å¼€å¯å‰æ³¨æ„é…ç½®SVNé’©å­ç«¯çš„remoteConnectåŠremoteApiSettingsé…ç½®
 node node.svntail/lib/server-reporter.js
 ~~~
